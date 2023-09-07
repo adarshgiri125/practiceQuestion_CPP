@@ -1,4 +1,4 @@
-<h2><a href="https://practice.geeksforgeeks.org/problems/max-sum-subarray-of-size-k5313/1">Max Sum Subarray of size K</a></h2><h3>Difficulty Level : Easy</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 18px;">Given an array of integers Arr of size <strong>N</strong> and a number <strong>K</strong>. Return&nbsp;the maximum sum of a subarray of size K.</span></p>
+<h2><a href="https://practice.geeksforgeeks.org/problems/max-sum-subarray-of-size-k5313/1?utm_source=geeksforgeeks&utm_medium=article_practice_tab&utm_campaign=article_practice_tab">Max Sum Subarray of size K</a></h2><h3>Difficulty Level : Easy</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 18px;">Given an array of integers Arr of size <strong>N</strong> and a number <strong>K</strong>. Return&nbsp;the maximum sum of a subarray of size K.</span></p>
 <p><strong>NOTE*:&nbsp;</strong>A subarray is a contiguous part of any given array.</p>
 <p><strong><span style="font-size: 18px;">Example 1:</span></strong></p>
 <pre><strong><span style="font-size: 18px;">Input:</span></strong>
