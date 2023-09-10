@@ -38,16 +38,27 @@ class Solution
     
         Node* insert(Node* root, int data) {
            
-        if(root == NULL){
-            return new Node(data);
-        }
+        if(root == NULL) return new Node(data);
+        Node* curr = root;
         
-        if(root -> data == data) return root;
-        else if(root -> data < data){
-            root -> right = insert(root -> right,data);
-        }
-        else if(root -> data > data){
-            root -> left = insert(root -> left,data);
+        while(true){
+            if(curr -> data < data){
+                if(curr -> right != NULL) curr = curr -> right;
+                else{
+                   curr -> right = new Node(data);
+                   break; 
+                } 
+            }
+            else if(curr -> data == data){
+                return root;
+            }
+            else{
+                if(curr -> left != NULL) curr = curr -> left;
+                else {
+                    curr -> left = new Node(data);
+                    break;
+                }
+            }
         }
         
         return root;
