@@ -10,49 +10,60 @@ using namespace std;
 
 class Solution {
   public:
-  
-    void dfs(vector<vector<int>> &vis,vector<vector<int>> &grid,int row,int col, int drow[], int dcol[]){
+    int numberOfEnclaves(vector<vector<int>> &grid) {
+        priority_queue<pair<int, int>,vector<pair<int, int>>,greater<pair<int, int>>> q;
         int n = grid.size();
         int m = grid[0].size();
-        vis[row][col] = 1;
-        
-        for(int i = 0; i<4; i++){
-            int nrow = row + drow[i];
-            int ncol = col + dcol[i];
-            
-            if(nrow < n && nrow >=0 && ncol >=0 && ncol < m && grid[nrow][ncol] == 1 && vis[nrow][ncol] != 1){
-                dfs(vis,grid,nrow,ncol,drow,dcol);
+        vector<vector<int> > vis(n,vector<int> (m,0));
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<m; j++){
+                if(i == 0 || i == n-1){
+                    if(grid[i][j] == 1){
+                        vis[i][j] = 1;
+                    //   cout << i << " " << j << endl;
+                        q.push({i,j});
+                    }
+                }
+                if(j == 0 || j == m-1){
+                    if(grid[i][j] == 1){
+                        vis[i][j] = 1;
+                    //   cout << i << " " << j << endl;
+                        q.push({i,j});
+                    }
+                }
             }
         }
         
-    }
-    int numberOfEnclaves(vector<vector<int>> &grid) {
+        int row[] = {-1,0,+1,0};
+        int col[] = {0,+1,0,-1};
+        while(!q.empty()){
+            int r = q.top().first;
+            int c = q.top().second;
+            
+            q.pop();
+            
+            for(int i= 0; i<4; i++){
+                int nrow = r + row[i];
+                int ncol = c + col[i];
+                
+                if(nrow >=0 && nrow < n && ncol >= 0 && ncol < m && !vis[nrow][ncol] && grid[nrow][ncol] == 1){
+                    vis[nrow][ncol] = 1;
+                    q.push({nrow,ncol});
+                }
+            }
+            
+        }
+        int count = 0;
         
-        int n = grid.size();
-        int m = grid[0].size();
-        vector<vector<int>> vis(n,vector<int> (m,0));
-      
-         int ans = 0;
-         int drow[] = {-1,0,+1,0};
-         int dcol[] = {0,+1,0,-1};
-         for(int i = 0; i<n; i++){
-             for(int j = 0; j<m; j++){
-                 if(grid[i][j] == 1 && (i == 0 || i == n-1 || j == m-1 || j == 0) && vis[i][j] != 1){
-                      dfs(vis,grid,i,j,drow,dcol);
-                      
-                 }
-             }
-         }
-         
-         for(int i = 0; i<n; i++){
-             for(int j = 0; j<m; j++){
-                 if(grid[i][j] == 1 && vis[i][j] != 1){
-                    ans++;
-                 }
-             }
-         }
-         
-         return ans;
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<m; j++){
+                if(grid[i][j] == 1 && vis[i][j] != 1) {
+                    count++;
+                }
+            }
+        }
+           
+           return count;
     }
 };
 
