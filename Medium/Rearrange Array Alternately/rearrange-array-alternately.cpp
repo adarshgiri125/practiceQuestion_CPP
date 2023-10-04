@@ -16,24 +16,29 @@ class Solution{
     void rearrange(long long *arr, int n) 
     { 
     	
-    	int lastidx=n-1;
-    	int firstidx=0;
-    	int maxi=arr[n-1]+1;
-    	for(int i=0;i<n;i++)
-    	{
-    	    if(i%2==0)
-    	    {
-    	        arr[i]+=(arr[lastidx]%maxi)*maxi;
-    	        lastidx--;
+    	int s = 0;
+    	int e = n-1;
+    	
+    	long long m = INT_MIN;
+    	for(int i = 0; i<n; i++){
+    	    m = max(m,arr[i]);
+    	}
+    	m += 1;
+    	
+    	for(int i = 0; i<n; i++){
+    	    if(i % 2 == 0){
+    	        arr[i] = arr[i] + (arr[e] % m) * m;
+    	        e--;
     	    }
-    	    else
-    	    {
-    	    arr[i]+=(arr[firstidx]%maxi)*maxi;
-    	        firstidx++;
+    	    else{
+    	        arr[i] = arr[i] + (arr[s] % m) * m;
+    	        s++;
     	    }
     	}
-    	for(int i=0;i<n;i++)
-    	arr[i]/=maxi;
+    	
+    	for(int i = 0; i<n; i++){
+    	    arr[i] = arr[i]/m;
+    	}
     	 
     }
 };
