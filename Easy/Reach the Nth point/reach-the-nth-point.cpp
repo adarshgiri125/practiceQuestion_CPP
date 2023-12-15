@@ -5,20 +5,16 @@ using namespace std;
 // } Driver Code Ends
 class Solution{
 	public:
-	int mod = 1e9 + 7;
-	    int solve(int n,vector<int> &dp){
-	        if(n == 0) return 1;
-	        if(n == 1) return 1;
-	        if(dp[n] != -1) return dp[n];
-	        
-	        int left = (solve(n-1,dp)) % mod;
-	        int right = (solve(n-2,dp)) %mod;
-	        
-	        return dp[n] = (left + right) % mod;
-	    }
 		int nthPoint(int n){
-		    vector<int> dp(n+1,-1);
-		    return solve(n,dp);
+		    if(n==1) return 1;
+		    if(n==2) return 2;
+		    int pre1=1,pre2=2, temp, mod=1e9+7;;
+		    for(int i=3; i<=n; ++i){
+		        temp=pre2;
+		        pre2=(pre2%mod+pre1%mod)%mod;
+		        pre1=temp;
+		    }
+		    return pre2;
 		}
 };
 
