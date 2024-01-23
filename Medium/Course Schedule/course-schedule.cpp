@@ -8,47 +8,37 @@ using namespace std;
 class Solution
 {
   public:
-    vector<int> findOrder(int V, int m, vector<vector<int>> prerequisites) 
+    vector<int> findOrder(int n, int m, vector<vector<int>> prerequisites) 
     {
-       vector<int> adj[V];
-	   int indegree[V] = {0};
-	  
-       for(auto it:  prerequisites){
-           adj[it[1]].push_back(it[0]);
-           indegree[it[0]]++;
-       }
-	   
-	   
-	   
-	   queue<int> q;
-	   vector<int> ans;
-	   
-	   
-	   
-	   for(int i = 0; i < V; i++){
-	       if(indegree[i] == 0){
-	           q.push(i);
-	       }
-	   }
-	   
-	   while(!q.empty()){
-	       int node = q.front();
-	       q.pop();
-	       ans.push_back(node);
-	       
-	       for(auto i : adj[node]){
-	           indegree[i]--;
-	           if(indegree[i] == 0) q.push(i);
-	       }
-	   }
-	   
-	   //it is for detect cycle using BFS method (By help of TOPOSORT);
-	  if (ans.size() == V){
-	      return ans;
-	  }
-	  else{
-	      return {};
-	  }
+        //code here
+        vector<int>adj[n];
+        for(int i=0; i<m; i++){
+            int u=prerequisites[i][1];
+            int v=prerequisites[i][0];
+            if(u==v) return {};
+            adj[u].push_back(v);
+        }
+        vector<int>ans, indegree(n, 0);
+        for(int i=0; i<n; i++){
+            for(auto &it:adj[i]){
+                indegree[it]++;
+            }
+        }
+        queue<int>q;
+        for(int i=0; i<n; i++){
+            if(indegree[i]==0) q.push(i);
+        }
+        while(!q.empty()){
+            int node=q.front();
+            q.pop();
+            ans.push_back(node);
+            for(auto &it:adj[node]){
+                indegree[it]--;
+                if(indegree[it]==0) q.push(it);
+            }
+        }
+        if(ans.size()<n) return {};
+        return ans;
     }
 };
 
