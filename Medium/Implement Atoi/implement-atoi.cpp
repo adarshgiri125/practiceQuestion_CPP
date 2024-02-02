@@ -10,27 +10,31 @@ using namespace std;
 class Solution{
   public:
     /*You are required to complete this method */
-    int atoi(string str) {
-        int sum = 0;
-        int start = 0;
-        bool a = false;
-        if (str[0] == '-') {
-            start = 1;
-            a = true;
+    int atoi(string s) {
+        int n = s.size();
+        int ans = 0;
+        bool neg = false;
+        int i = 0;
+        if(s[i] == '-'){
+            i = 1;
+            neg = true;
         }
-        for(int i = start; i<str.size();i++){
-            if(str[i]>='0' && str[i]<='9'){
-            sum = sum* 10 + (str[i]-'0');
+        
+        for( i; i<n; i++){
+            int value = s[i] - '0';
+          
+            if(value >= 0 && value <=9){
+                ans = ans + value * (pow(10,n-i-1)); 
+                // cout << ans << endl;
+                
             }
-            else{
-                return -1;
-            }
+            else return -1;
         }
-        if(a == true){
-            return -sum;
+        if(neg){
+         
+            return (-1 * ans);
         }
-        return sum;
-    
+        return ans;
     }
 };
 
