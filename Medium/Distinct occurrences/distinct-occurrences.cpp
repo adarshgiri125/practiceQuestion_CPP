@@ -8,26 +8,20 @@ using namespace std;
 
 class Solution
 {
-    int mod = 1e9+7;
     public:
-    int solve(string &s, string &t, int i, int j, vector<vector<int>> &dp) {
-        if (j == 0)
-            return 1;
-        if (i == 0)
-            return 0;
-        if (dp[i][j] != -1)
-            return dp[i][j];
-        if (s[i - 1] == t[j - 1]) {
-            return dp[i][j] = (solve(s, t, i - 1, j - 1, dp) + solve(s, t, i - 1, j, dp)) % mod;
-        }
-        return dp[i][j] = (solve(s, t, i - 1, j, dp)) % mod;
-    }
-    int subsequenceCount(string S, string T)
+    int subsequenceCount(string s, string t)
     {
-       int n = S.length();
-       int m = T.length();
-       vector<vector<int > > dp(n+1, vector<int> (m+1, -1));
-       return solve(S,T,n,m, dp);
+      int n=s.length(),m=t.length();
+      int mod=1e9+7;
+      vector<vector<int>>dp(n+1,vector<int>(m+1,0));
+      for(int i=0;i<n;i++)dp[i][0]=1;
+      for(int i=1;i<=n;i++){
+          for(int j=1;j<=m;j++){
+              if(s[i-1]==t[j-1])dp[i][j]=dp[i-1][j-1];
+              dp[i][j]=(dp[i][j]+dp[i-1][j])%mod;
+          }
+      }
+      return dp[n][m];
     }
 };
  
