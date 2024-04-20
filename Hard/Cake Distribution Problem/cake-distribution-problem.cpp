@@ -16,7 +16,7 @@ class Solution{
         for(int i = 0; i<n; i++){
             sum+=arr[i];
             if(sum>=mid){
-                // one piece over update counter and set sum = 0 to count sweetness of next chunk
+                
                 cnt++;
                 sum=0;
             }
