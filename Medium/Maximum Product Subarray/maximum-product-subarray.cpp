@@ -7,28 +7,29 @@ using namespace std;
 //User function template for C++
 class Solution{
 public:
+
 	// Function to find maximum product subarray
-	long long maxProduct(vector<int> arr, int n) {
-	    long long m = 1;
-	    long long ans = INT_MIN;
-	    long long m2 = 1;
-	    for(int i = 0; i<n; i++){
-	        if(m == 0){
-	            m = 1;
-	        }
-	        if(m2 == 0){
-	            m2 = 1;
-	        }
-	        
-	        m = m * arr[i];
-	        m2 = m2 * arr[n-i-1];
-	        
-	        
-	        ans = max(ans,max(m,m2));
-	    }
-	    
-	    
-	    return ans;
+	long long maxProduct(vector<int> nums, int n) {
+
+        long long ans = INT_MIN;
+        long long value = 1;
+        for(int i = 0; i< n; i++){
+            
+            value *= nums[i];
+            if(value == 0){
+                value = nums[i];
+            }
+            ans = max(ans,value);
+        }
+        value = 1;
+        for(int i = n-1; i>=0; i--){
+            value *= nums[i];
+            if(value == 0){
+                value = nums[i];
+            }
+            ans = max(ans,value);
+        }
+        return ans;
 	}
 };
 
