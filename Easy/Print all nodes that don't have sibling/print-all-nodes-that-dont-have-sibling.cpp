@@ -113,27 +113,26 @@ int main()
      Node* left, *right;
 }; */
 
-void solve(Node* root, vector<int> &ans){
-    if(root == NULL){
+void solve(Node* root, vector<int>& ans) {
+    if(root == NULL) {
         return;
     }
-    if(root -> left != NULL && root -> right == NULL){
+    if(root -> left && !root -> right) {
         ans.push_back(root -> left -> data);
     }
-    if(root -> left == NULL && root -> right != NULL){
+    if(root -> right && !root -> left) {
         ans.push_back(root -> right -> data);
     }
-    
     solve(root -> left, ans);
     solve(root -> right, ans);
 }
+
 vector<int> noSibling(Node* node)
 {
+    // code here
     vector<int> ans;
-    solve(node,ans);
-    if(ans.empty()){
-        return {-1};
-    }
-    sort(ans.begin(),ans.end());
-    return ans;
+    solve(node, ans);
+    sort(ans.begin(), ans.end());
+    if(ans.size()) return ans;
+    return {-1};
 }
