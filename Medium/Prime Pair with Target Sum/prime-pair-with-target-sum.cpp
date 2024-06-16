@@ -41,7 +41,7 @@ class Solution {
     return true;
 }
     void prime(int n,map<int,int> &mp){
-        for(int i = 2; i <= n; i++){
+        for(int i = n; i >= 2; i--){
             if(isPrime(i)) mp[i]++;
         }
       
@@ -54,7 +54,7 @@ class Solution {
         for(auto i : mp){
             int u = -1;
             if(i.second > 0)  u = i.first;
-            if(u == 524) 
+        
             int v = n - u;
             if(mp[v] > 0) return {u,v};
         }
