@@ -10,42 +10,41 @@ using namespace std;
 
 class Solution {
   public:
-    int r[4] = {-1, 0, +1, 0};
-    int c[4] = { 0, +1, 0, -1};
-    char dir[4] = {'U', 'R', 'D', 'L'};
-    void solve(vector<vector<int>> &mat, int i, int j, vector<vector<int> > &vis, vector<string> &ans, string &temp){
+    int r[4] = {-1,0,1,0};
+    int c[4] = {0,1,0,-1};
+    char dir[4] = {'U','R','D','L'};
+    vector<string> ans;
+    void solve(vector<vector<int>> &mat,int row, int col, vector<vector<int> > 
+    vis, string &temp){
+        
+       
+        vis[row][col] = 1;
         int n = mat.size();
-     
-        if(i < 0 || j > n-1 || i > n - 1 || j < 0 || vis[i][j] == 1 || mat[i][j] == 0)return;
-        if(i == n - 1 && j == n - 1){
-            ans.push_back(temp);
-            return;
-        } 
-        vis[i][j] = 1; 
-        
-        for(int d = 0; d<4; d++){
-            int row = i + r[d];
-            int col = j + c[d];
+        int m = mat[0].size();
+         if(row == n-1 && col == m - 1){
+             ans.push_back(temp);
+             return;
+         }
+        for(int i = 0; i<4; i++){
+            int new_r = r[i] + row;
+            int new_c = c[i] + col;
+         
             
-            temp += dir[d];
-            
-            solve(mat,row,col,vis,ans,temp);
-            
-            temp.pop_back();
+            if(new_r >= 0 && new_r < n && new_c >= 0 && new_c < m && mat[new_r][new_c] == 1 && vis[new_r][new_c] != 1 ){
+               temp += dir[i];
+               solve(mat,new_r,new_c, vis, temp);
+               temp.pop_back();
+            }
         }
-        
-        vis[i][j] = 0;
-        
-        
+        vis[row][col] = 0;
     }
     vector<string> findPath(vector<vector<int>> &mat) {
         int n = mat.size();
         int m = mat[0].size();
-        vector<string> ans;
-        vector<vector<int> > vis(n,vector<int> (m, 0));
-        string temp = "";
-        solve(mat,0,0,vis,ans,temp);
-        sort(ans.begin(),ans.end());
+        vector<vector<int> > vis(n,vector<int> (m,0));
+        string temp;
+        if(mat[0][0] == 0) return ans;
+        solve(mat,0,0,vis, temp);
         return ans;
     }
 };
