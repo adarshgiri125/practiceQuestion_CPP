@@ -7,24 +7,33 @@ using namespace std;
 class Solution {
   public:
     void sort012(vector<int>& arr) {
-    int n = arr.size();
-    int i = 0;  
-    int j = n - 1;  
-    
-    for (int x = 0; x <= j; ) {  // Iterate until x is less than or equal to j
-        if (arr[x] == 0) {
-            swap(arr[i], arr[x]);
-            i++;
-            x++;
-        } else if (arr[x] == 2) {
-            swap(arr[x], arr[j]);
-            j--;
-        } else {
-            x++;
+        // code here
+        int n = arr.size();
+        int _0s = 0;
+        int _2s = n-1;
+        int i = 0;
+        
+        while( i <= _2s)
+        {
+            if(arr[i] == 0)
+            {
+                arr[i] = arr[_0s];
+                arr[_0s] = 0;
+                _0s++;
+                i++;
+            }
+            else if(arr[i] == 2)
+            {
+                arr[i] = arr[_2s];
+                arr[_2s] = 2;
+                _2s--;
+            }
+            else
+            {
+                i++;
+            }
         }
     }
-}
-
 };
 
 //{ Driver Code Starts.
@@ -53,6 +62,7 @@ int main() {
         }
 
         cout << endl;
+        cout << "~" << endl;
     }
     return 0;
 }
