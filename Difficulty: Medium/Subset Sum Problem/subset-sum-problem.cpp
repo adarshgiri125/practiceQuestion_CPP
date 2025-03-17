@@ -1,0 +1,68 @@
+//{ Driver Code Starts
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+
+class Solution {
+  public:
+    bool isSubsetSum(vector<int>& arr, int sum) {
+        int n=arr.size();
+        vector<int> prev(sum+1,0),cur(sum+1,0);
+        prev[0]=1;
+        
+        if(arr[0]<=sum)
+        prev[arr[0]]=1;
+        
+        for(int i=1;i<n;i++){
+            cur[0]=1;
+            for(int s=1;s<=sum;s++){
+                int notTake = prev[s];
+                int take = 0;
+                if(arr[i]<=s) take = prev[s-arr[i]];
+                 cur[s] = take | notTake;
+            }
+            prev=cur;
+        }
+        
+        return prev[sum];
+        
+    }
+
+
+};
+
+
+//{ Driver Code Starts.
+
+int main() {
+
+    int t;
+    cin >> t;
+    cin.ignore();
+    while (t--) {
+        vector<int> arr;
+        string input;
+        getline(cin, input);
+        stringstream ss(input);
+        int number;
+        while (ss >> number) {
+            arr.push_back(number);
+        }
+        int sum;
+        cin >> sum;
+        cin.ignore();
+
+        Solution ob;
+        if (ob.isSubsetSum(arr, sum))
+            cout << "true" << endl;
+        else
+            cout << "false" << endl;
+        cout << "~" << endl;
+    }
+    return 0;
+}
+
+// } Driver Code Ends
