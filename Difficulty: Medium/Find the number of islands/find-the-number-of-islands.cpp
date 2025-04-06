@@ -2,46 +2,50 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 // } Driver Code Ends
+
 class Solution {
   public:
-    // Function to find the number of islands.
-    void mark_conn(vector<vector<int> > &vis, vector<vector<char> > &grid, int i, int j){
-        int n = grid.size();
-        int m = grid[0].size();
+    int n , m ;
+    void dfs(int i , int j , vector<vector<char>>& grid ,vector<vector<int>>& visited){
+        if(i < 0 || i >= n || j < 0 || j >= m || visited[i][j] == 1 || grid[i][j] == 'W'){
+            return ;
+        }
         
-        vis[i][j] = 1;
+            visited[i][j]  = 1; //  down
+            
+            dfs(i+1,j,grid,visited); // Donw
+            dfs(i-1,j,grid,visited); // UP
+            dfs(i,j+1,grid,visited); // Right
+            dfs(i,j-1,grid,visited); // Left
+            dfs(i-1,j+1,grid,visited); // Dia TOP right
+            dfs(i-1,j-1,grid,visited); // Dia TOp left
+            dfs(i+1,j-1,grid,visited); // Dia bottom left
+            dfs(i+1,j+1,grid,visited); // Dia bottom right
+
+    }
+    int countIslands(vector<vector<char>>& grid) {
+        // Code here
+          int ans = 0;
+          n = grid.size();
+          m = grid[0].size();
+        vector<vector<int>>visited(n,vector<int>(m,0));
         
-        for(int u = -1; u<= 1; u++){
-            for(int v = -1; v<= 1; v++){
-                int new_row = i + u;
-                int new_col = j + v;
-                
-                if(new_row >= 0 && new_row < n && new_col >= 0 && new_col < m && grid[new_row][new_col] == '1' && vis[new_row][new_col] == 0){
-                    mark_conn(vis,grid,new_row, new_col);
-                }
+        for(int i = 0 ; i < n ; i++){
+            for(int j = 0 ; j < m ; j++){
+                 if(grid[i][j] == 'L' && visited[i][j] != 1){
+                     dfs(i,j,grid,visited);
+                     ans++;
+                 }
             }
         }
-    }
-    
-    int numIslands(vector<vector<char>>& grid) {
-        int n = grid.size();
-        int m = grid[0].size();
         
-        vector<vector<int> > vis(n,vector<int> (m,0));
-        int ans = 0;
-       for(int i = 0; i<n; i++){
-           for(int j = 0; j<m; j++){
-               if((vis[i][j] == 0) && (grid[i][j] == '1')){
+        return ans;
         
-                   ans++;
-                   mark_conn(vis,grid,i,j);
-               }
-           }
-       }
-       return ans;
     }
 };
+
 
 //{ Driver Code Starts.
 int main() {
@@ -57,8 +61,11 @@ int main() {
             }
         }
         Solution obj;
-        int ans = obj.numIslands(grid);
+        int ans = obj.countIslands(grid);
         cout << ans << '\n';
+
+        cout << "~"
+             << "\n";
     }
     return 0;
 }
