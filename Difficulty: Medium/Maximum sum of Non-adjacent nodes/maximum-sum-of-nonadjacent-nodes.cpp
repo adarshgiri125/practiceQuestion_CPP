@@ -102,7 +102,7 @@ struct Node
 class Solution {
   public:
     // Function to return the maximum sum of non-adjacent nodes.
-     int solve(unordered_map<Node* ,int> &dp,  Node *root){
+    int solve(unordered_map<Node* ,int> &dp,  Node *root){
         if(root == NULL) return 0;
         if(dp[root]) return dp[root];
         int take = root->data;
