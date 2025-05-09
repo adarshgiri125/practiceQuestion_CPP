@@ -12,15 +12,35 @@ using namespace std;
 class Solution {
   public:
     int findMissing(vector<int> &arr) {
+        // code here
         int n=arr.size();
-        int d=INT_MAX;
-        
-        for(int i=1;i<n;i++) d=min(d,arr[i]-arr[i-1]);
-        for(int i=1;i<n;i++){
-            if(arr[i]-arr[i-1]!=d) return arr[i]-d;
+        int commonDiff;
+        if(arr[1]-arr[0]<0)
+        commonDiff=max(arr[1]-arr[0], arr[n-1]-arr[n-2]);
+        else
+        commonDiff= min(arr[1]-arr[0], arr[n-1]-arr[n-2]);
+        int low = 0;
+        int high = n-1;
+        while(low < high)
+        {
+            int mid = low + (high-low)/2;
+            if(arr[mid] == arr[0] + commonDiff*mid)
+            {   low = mid+1;
+                
+            }
+            else{
+                high = mid;
+            }
+        }
+        if(low==n-1)
+        {
+            if(arr[n-1]-arr[n-2]!=(commonDiff))
+            return arr[n-1]-commonDiff;
+            else
+            return arr[0]+commonDiff*(low+1);
         }
         
-        return arr[n-1]+d;
+        return arr[0] + commonDiff*low;
     }
 };
 
