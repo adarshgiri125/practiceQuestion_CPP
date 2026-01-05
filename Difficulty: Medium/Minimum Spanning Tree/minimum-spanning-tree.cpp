@@ -1,41 +1,61 @@
 class Solution {
   public:
-    int spanningTree(int V, vector<vector<int>>& edges) {
-        
-        vector<vector<pair<int,int> > > adj(V);
-        
-        for(auto node : edges){
-            int u = node[0];
-            int v = node[1];
-            int w = node[2];
-            
-            adj[u].push_back({v,w});
-            adj[v].push_back({u,w});
-        }
-        // code here
-        priority_queue<pair<int,int> , vector<pair<int,int> >, greater<> > pq;
-        
-        vector<int> vis(V,0);
-        pq.push({0,0});
-        int sum = 0;
-        while(!pq.empty()){
-            auto [value, node] = pq.top();
-            pq.pop();
-            
-            if(vis[node] == 1) continue;
-            vis[node] = 1;
-            sum += value;
-            
-            for(auto edge : adj[node]){
-                int node = edge.first;
-                int w = edge.second;
-                if(vis[node] != 1){
-                    pq.push({w,node});
-                }
-                
+  
+    class DisjointSet{
+        vector<int> rank,size,parent;
+        public :
+        DisjointSet(int n){
+            rank.resize(n + 1, 0);
+            size.resize(n + 1, 1);
+            parent.resize(n + 1, 0);
+            for(int i = 0; i<=n; i++){
+                parent[i] = i;
             }
+        }
+        
+        
+        int findUP(int node){
+            if(node == parent[node]){
+                return node;
+            }
+            else return parent[node] = findUP(parent[node]);
+        }
+        
+        void unionByRank(int u,int v){
+            int up_u = findUP(u);
+            int up_v = findUP(v);
             
+            if(rank[up_u] > rank[up_v]){
+                parent[up_v] = up_u;
+            }
+            else if(rank[up_v] > rank[up_u]){
+                parent[up_u] = up_v;
+            }
+            else{
+                parent[up_u] = up_v;
+                rank[up_v]++;
+            }
+        }
+    };
+    int spanningTree(int V, vector<vector<int>>& edges) {
+        // code here
+        int n = edges.size();
+        
+        for(int i = 0; i<n; i++){
+            reverse(edges[i].begin(), edges[i].end());
+        }
+        sort(edges.begin(), edges.end());
+        DisjointSet ds(V);
+        int sum = 0;
+        for(int i = 0; i<n; i++){
+            int u = edges[i][1];
+            int v = edges[i][2];
+            int w = edges[i][0];
             
+            if(ds.findUP(u) != ds.findUP(v)){
+                sum += w;
+                ds.unionByRank(u,v);
+            }
         }
         return sum;
         
